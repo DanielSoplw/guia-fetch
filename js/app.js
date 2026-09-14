@@ -6,10 +6,15 @@
 */
 
 let usuariosGlobales = [];
-const contenedor = document.querySelector("#contenedorUsuarios");
 
 function mostrarUsuarios(usuarios) {
+  const contenedor = document.querySelector("#contenedorUsuarios");
   contenedor.innerHTML = "";
+
+  if (usuarios.length === 0) {
+    contenedor.innerHTML = "<p>No se encontraron usuarios.</p>";
+    return;
+  }
 
   usuarios.forEach(usuario => {
     const tarjeta = document.createElement("article");
@@ -44,6 +49,7 @@ async function cargarUsuarios() {
     }
 
     usuariosGlobales = await response.json();
+    usuariosGlobales.sort((a, b) => a.name.localeCompare(b.name)); 
     mostrarUsuarios(usuariosGlobales);
     mensaje.textContent = "";
   } catch (error) {
@@ -63,8 +69,16 @@ buscar.addEventListener("input", () => {
     usuario.address.city.toLowerCase().includes(texto)
   );
 
-  mostrarUsuarios(filtrados);
+  mostrarUsuarios(filtrados); 
 });
 
+
+const limpiarBtn = document.querySelector("#limpiarBusqueda");
+if (limpiarBtn) {
+  limpiarBtn.addEventListener("click", () => {
+    buscar.value = "";
+    mostrarUsuarios(usuariosGlobales);
+  });
+}
 
 cargarUsuarios();
