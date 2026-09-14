@@ -28,11 +28,24 @@ function mostrarUsuarios(usuarios) {
 }
 
 async function cargarUsuarios() {
-  const response = await fetch(
-    "https://jsonplaceholder.typicode.com/users"
-  );
-  const usuarios = await response.json();
-  mostrarUsuarios(usuarios);
+    const mensaje = document.querySelector("#mensaje");
+
+    try {
+    mensaje.textContent = "Cargando usuarios...";
+
+    const response = await fetch( "https://jsonplaceholder.typicode.com/users"
+    );
+
+    if (!response.ok) {
+    throw new Error(`Error HTTP: ${response.status}`);
+    }
+
+    const usuarios = await response.json(); mostrarUsuarios(usuarios); mensaje.textContent = "";
+    } catch (error) {
+    mensaje.textContent = "No fue posible cargar la información.";
+    console.error(error);
+    }
 }
+
 
 cargarUsuarios();
