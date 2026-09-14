@@ -4,11 +4,35 @@
 })
 .catch(error => console.error(error));
 */
-async function cargarUsuarios() { const response = await fetch(
-"https://jsonplaceholder.typicode.com/users"
-);
+const contenedor = document.querySelector("#contenedorUsuarios");
 
-const usuarios = await response.json(); console.log(usuarios);
+function mostrarUsuarios(usuarios) {
+  contenedor.innerHTML = "";
+
+  usuarios.forEach(usuario => {
+    const tarjeta = document.createElement("article");
+    tarjeta.classList.add("tarjeta");
+
+    tarjeta.innerHTML = `
+      <h3>${usuario.name}</h3>
+      <p>${usuario.email}</p>
+      <p>${usuario.address.city}</p>
+      <p>${usuario.company.name}</p>
+      <p>@${usuario.username}</p>
+      <p>${usuario.phone}</p>
+      <p><a href="http://${usuario.website}" target="_blank">${usuario.website}</a></p>
+    `;
+
+    contenedor.appendChild(tarjeta);
+  });
+}
+
+async function cargarUsuarios() {
+  const response = await fetch(
+    "https://jsonplaceholder.typicode.com/users"
+  );
+  const usuarios = await response.json();
+  mostrarUsuarios(usuarios);
 }
 
 cargarUsuarios();
