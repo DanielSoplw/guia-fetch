@@ -33,3 +33,31 @@ margin-top: 20px;
 .tarjeta { background: white; padding: 20px; border-radius: 8px;
 box-shadow: 0 2px 8px rgba(0,0,0,.1);
 }
+.contenedor-usuarios {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* Tablet: 2 columnas */
+@media (max-width: 900px) {
+  .contenedor-usuarios {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Móvil: 1 columna + ajustes de layout */
+@media (max-width: 600px) {
+  .contenedor-usuarios {
+    grid-template-columns: 1fr;
+  }
+
+  nav ul {
+    flex-direction: column;
+  }
+
+  main {
+    padding: 16px;
+  }
+}
